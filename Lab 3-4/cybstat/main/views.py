@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .models import CybdbModels
 from django.views.generic import TemplateView
 
 
@@ -7,5 +7,7 @@ class About(TemplateView):
     template_name = 'main/about.html'
 
 
-class Index(TemplateView):
-    template_name = 'main/index.html'
+def index(request):
+    players = CybdbModels.objects.order_by('-id')
+    return render(request, 'main/index.html', {'CybdbModels': players})
+
