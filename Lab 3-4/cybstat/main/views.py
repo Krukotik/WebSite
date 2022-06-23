@@ -3,6 +3,7 @@ from .models import CybdbModels
 from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.contrib.auth import authenticate, login
 
 
 
@@ -12,6 +13,19 @@ class About(TemplateView):
 
 class Log(TemplateView):
     template_name = 'main/log.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        context = {}
+        if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("/")
+            else:
+                context['error'] = "Неправильный логин или пароль"
+        return render(request, self.template_name, context)
 
 
 def index(request):
