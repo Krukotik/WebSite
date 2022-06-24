@@ -3,12 +3,20 @@ from .models import CybdbModels
 from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
+
+def logout_user(request):
+    logout(request)
+    return redirect('index')
 
 
 class About(TemplateView):
     template_name = 'main/about.html'
+
+
+class Cart(TemplateView):
+    template_name = 'main/cart.html'
 
 
 class Log(TemplateView):
@@ -48,6 +56,8 @@ class Reg(TemplateView):
                 return redirect(reverse('index'))
 
         return render(request, self.template_name)
+
+
 
 
 
