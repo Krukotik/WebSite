@@ -22,6 +22,7 @@ class Cart(TemplateView):
 class Log(TemplateView):
     template_name = 'main/log.html'
 
+
     def dispatch(self, request, *args, **kwargs):
         context = {}
         if request.method == 'POST':
@@ -38,11 +39,12 @@ class Log(TemplateView):
 
 def index(request):
     players = CybdbModels.objects.order_by('-id')
-    return render(request, 'main/index.html', {'CybdbModels': players})
+    return render(request, 'main/index.html', {'title': 'Главная', 'CybdbModels': players})
 
 
 class Reg(TemplateView):
     template_name = "main/reg.html"
+
 
     def dispatch(self, request, *args, **kwargs):
         if request.method == 'POST':
